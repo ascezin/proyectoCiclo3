@@ -13,9 +13,9 @@ def usuarios_api_view(request):
         usuario_serializer = userSerializer(usuario, many=True)
         return Response(usuario_serializer.data)
 
-    if request.method == 'POST':
+    elif request.method == 'POST':
         usuario_serializer = userSerializer(data = request.data)
-        if userSerializer.is_valid():
+        if usuario_serializer.is_valid():
             usuario_serializer.save()
             return Response("Se ha registrado correctamente")
         return Response(usuario_serializer.errors)
