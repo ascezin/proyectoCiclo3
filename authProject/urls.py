@@ -13,16 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.urls import path
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 from authApp import views as views_authApp
 from hospitalApp import views as views_hospital
 
 urlpatterns = [
-path('login/', TokenObtainPairView.as_view()),
-path('refresh/', TokenRefreshView.as_view()),
-path('user/', views_authApp.UserCreateView.as_view()),
-path('user/<int:pk>/', views_authApp.UserDetailView.as_view()),
-path('usuario/', views_hospital.usuarios_api_view),
-path('usuario/<int:pk>/', views_hospital.usuarios_detail_view),
-]
+    path('login/', TokenObtainPairView.as_view()),
+    path('refresh/', TokenRefreshView.as_view()),
+    path('user/', views_authApp.UserCreateView.as_view()),
+    path('user/<int:pk>/', views_authApp.UserDetailView.as_view()),
+    path('usuario/', views_hospital.usuarios_api_view),
+    path('usuario/<int:pk>/', views_hospital.usuarios_detail_view),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
